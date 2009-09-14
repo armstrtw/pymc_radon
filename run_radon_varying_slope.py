@@ -1,9 +1,9 @@
 import pymc
-import radon_varying_intercept
+import radon_varying_slope
 from pylab import hist, show
 
-M = pymc.MCMC(radon_varying_intercept)
-M.sample(iter=50e3, burn=10e3, thin=5)
+M = pymc.MCMC(radon_varying_slope)
+M.sample(iter=50e3, burn=10e3, thin=10)
 
 fit = M.stats()
 for k in fit.keys():

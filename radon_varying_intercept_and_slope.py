@@ -34,8 +34,12 @@ mu_a = pymc.Normal('mu_a', mu=0., tau=0.0001)
 sigma_a = pymc.Uniform('sigma_a', lower=0, upper=100)
 tau_a = pymc.Lambda('tau_a', lambda s=sigma_a: s**-2)
 
+mu_b = pymc.Normal('mu_b', mu=0., tau=0.0001)
+sigma_b = pymc.Uniform('sigma_b', lower=0, upper=100)
+tau_b = pymc.Lambda('tau_b', lambda s=sigma_b: s**-2)
+
 a = pymc.Normal('a', mu=mu_a, tau=tau_a, value=np.zeros(len(set(counties))))
-b = pymc.Normal('b', mu=0., tau=0.0001)
+b = pymc.Normal('b', mu=mu_b, tau=tau_b, value=np.zeros(len(set(counties))))
 
 sigma_y = pymc.Uniform('sigma_y', lower=0, upper=100)
 tau_y = pymc.Lambda('tau_y', lambda s=sigma_y: s**-2)
@@ -43,7 +47,7 @@ tau_y = pymc.Lambda('tau_y', lambda s=sigma_y: s**-2)
 # Model
 @pymc.deterministic(plot=False)
 def y_hat(a=a,b=b):
-       return a[index_c] + b*x
+       return a[index_c] + b[index_c]*x
 
 # Likelihood
 @pymc.stochastic(observed=True)
