@@ -1,16 +1,16 @@
-import pg
+import csv
 import numpy as np
 import pymc
 from math import log
 
-conn = pg.connect(dbname='kls_dev', user='rates')
-radon = conn.query("select activity, floor, county from radon where state = 'MN' order by county")
-radon_dict = radon.dictresult()
-radon_res = radon.getresult()
+radon_csv = csv.reader(open('srrs.csv'))
+radon = []
+for row in radon_csv:
+    radon.append(tuple(row))
 
-counties = np.array([x[2] for x in radon_res])
-y = np.array([x[0] for x in radon_res])
-x = np.array([x[1] for x in radon_res])
+counties = np.array([x[0] for x in radon])
+y = np.array([float(x[1]) for x in radon])
+x = np.array([float(x[2]) for x in radon])
 
 ## gelman adjustment for log
 y[y==0]=.1

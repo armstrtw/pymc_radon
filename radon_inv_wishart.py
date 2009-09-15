@@ -1,16 +1,16 @@
-import pg
+import csv
 import numpy as np
 import pymc
 from math import log
 
-conn = pg.connect(dbname='kls_dev', user='rates')
-radon = conn.query("select activity, floor, county from radon where state = 'MN' order by county")
-radon_dict = radon.dictresult()
-radon_res = radon.getresult()
+radon_csv = csv.reader(open('srrs.csv'))
+radon = []
+for row in radon_csv:
+    radon.append(tuple(row))
 
-counties = np.array([x[2] for x in radon_res])
-y = np.array([x[0] for x in radon_res])
-floor = np.array([x[1] for x in radon_res])
+counties = np.array([x[0] for x in radon])
+y = np.array([float(x[1]) for x in radon])
+x = np.array([float(x[2]) for x in radon])
 
 J = len(set(counties))
 K = 2
@@ -19,7 +19,7 @@ df = K + 1
 ## use matrix form
 X = np.empty((len(y),K))
 X[:,0] = 1.
-X[:,1] = floor
+X[:,1] = x
 
 ## gelman adjustment for log
 y[y==0]=.1
