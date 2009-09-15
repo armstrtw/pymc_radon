@@ -26,7 +26,7 @@ model.inits <- function () {
 wd <- getwd()
 jags.time <- system.time(radon.model <- jags(data=model.names, inits=model.inits, parameters.to.save=parameters.to.save,
                                              model.file=paste(wd,"radon.wishart.bug",sep="/"),DIC=FALSE,
-                                             n.chains=3, n.iter=10e3, n.burnin=3e3))
+                                             n.chains=3, n.iter=10e3, n.burnin=3e3, n.thin=5))
 print(jags.time)
 
 pdf("radon.wishart.bugs.pdf")
