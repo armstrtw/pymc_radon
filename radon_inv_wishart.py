@@ -61,11 +61,11 @@ def Sigma_B_raw(Tau_B_raw=Tau_B_raw):
 def rho_B(Sigma_B_raw=Sigma_B_raw):
     return Sigma_B_raw / np.sqrt(np.diag(Sigma_B_raw) * Sigma_B_raw)
 
-@pymc.deterministic(plot=False)
+@pymc.deterministic
 def Sigma_B(xi=xi,Sigma_B_raw=Sigma_B_raw):
     return abs(xi) * np.sqrt(np.diag(Sigma_B_raw))
 
-@pymc.deterministic
+@pymc.deterministic(plot=True)
 def B(xi=xi, B_raw_m=B_raw_m):
     return xi * B_raw_m
 
