@@ -39,4 +39,4 @@ radon.coefs <- cbind(radon.means[1:J],radon.means[1:J +J])
 e.y <- radon.model[["BUGSoutput"]][["sims.matrix"]][,grep('e.y', colnames(radon.model[["BUGSoutput"]][["sims.matrix"]]))]
 radon.rsq <- 1 - mean(apply(e.y,1,var)) / var(y)
 
-write.csv(radon.coefs,"radon.coefs.from.bugs.csv")
+write.table(radon.coefs,"radon.coefs.from.bugs.csv",row.names=F,col.names=F)
