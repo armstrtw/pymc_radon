@@ -2,9 +2,10 @@ import pymc
 import radon_inv_wishart
 from pylab import hist, show
 from pymc import Matplot
+from timeit import Timer
 
 M = pymc.MCMC(radon_inv_wishart)
-M.sample(iter=5e3, burn=1e3, thin=5)
+M.sample(iter=2e3, burn=1e3, thin=5)
 
 fit = M.stats()
 print('mu',fit['mu']['mean'])

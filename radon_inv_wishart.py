@@ -49,15 +49,15 @@ B_raw = []
 for i in range(J):
     B_raw.append(pymc.MvNormal('B_raw_%i' % i, mu_raw, Tau_B_raw))
 
-@pymc.deterministic(plot=False)
+@pymc.deterministic
 def B_raw_m(B_raw=B_raw):
-    return np.row_stack(B_raw)
+    return np.vstack(B_raw)
 
-@pymc.deterministic(plot=False)
+@pymc.deterministic
 def Sigma_B_raw(Tau_B_raw=Tau_B_raw):
     return np.linalg.inv(Tau_B_raw)
 
-@pymc.deterministic(plot=False)
+@pymc.deterministic
 def rho_B(Sigma_B_raw=Sigma_B_raw):
     return Sigma_B_raw / np.sqrt(np.diag(Sigma_B_raw) * Sigma_B_raw)
 
@@ -65,11 +65,11 @@ def rho_B(Sigma_B_raw=Sigma_B_raw):
 def Sigma_B(xi=xi,Sigma_B_raw=Sigma_B_raw):
     return abs(xi) * np.sqrt(np.diag(Sigma_B_raw))
 
-@pymc.deterministic(plot=False)
+@pymc.deterministic
 def B(xi=xi, B_raw_m=B_raw_m):
     return xi * B_raw_m
 
-@pymc.deterministic(plot=False)
+@pymc.deterministic
 def mu(xi=xi, mu_raw=mu_raw):
     return xi * mu_raw
 
