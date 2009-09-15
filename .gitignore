@@ -3,3 +3,5 @@
 *.pyc
 *.pickle
 *.png
+*.pdf
+radon.coefs.from.bugs.csv
