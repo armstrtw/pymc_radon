@@ -26,7 +26,7 @@ model.inits <- function () {
 wd <- getwd()
 jags.time <- system.time(radon.model <- jags(data=model.names, inits=model.inits, parameters.to.save=parameters.to.save,
                                              model.file=paste(wd,"radon.wishart.bug",sep="/"),DIC=FALSE,
-                                             n.chains=3, n.iter=10e3, n.burnin=3e3, n.thin=5))
+                                             n.chains=3, n.iter=20e3, n.burnin=3e3, n.thin=5))
 print(jags.time)
 
 pdf("radon.wishart.bugs.pdf")
@@ -39,4 +39,4 @@ radon.coefs <- cbind(radon.means[1:J],radon.means[1:J +J])
 e.y <- radon.model[["BUGSoutput"]][["sims.matrix"]][,grep('e.y', colnames(radon.model[["BUGSoutput"]][["sims.matrix"]]))]
 radon.rsq <- 1 - mean(apply(e.y,1,var)) / var(y)
 
-write.table(radon.coefs,"radon.coefs.from.bugs.csv",row.names=F,col.names=F)
+write.table(radon.coefs,"radon.coefs.from.bugs.csv",sep=",",row.names=F,col.names=F)
