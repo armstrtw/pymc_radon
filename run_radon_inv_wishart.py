@@ -7,7 +7,15 @@ from pymc import Matplot
 from timeit import Timer
 
 M = pymc.MCMC(radon_inv_wishart)
-M.sample(iter=10e3, burn=3e3, thin=5)
+
+## small
+M.sample(iter=1e3, burn=500, thin=5)
+
+## med
+#M.sample(iter=5e3, burn=1e3, thin=10)
+
+## large
+#M.sample(iter=10e3, burn=5e3, thin=10)
 
 fit = M.stats()
 print('mu',fit['mu']['mean'])
